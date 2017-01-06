@@ -1,0 +1,71 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>D3 Hand Off Auto Switch</title>
+  <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+  <div id="wrapper" class="wrapper">
+  </div>
+  <button class='hoa' onclick="hand()">Hand</button>
+  <button class='hoa' onclick="off()">Off</button>
+  <button class='hoa' onclick="auto()">Auto</button>
+  <button class='ma hidden' onclick="manual()">Manual</button>
+  <button class='ma hidden' onclick="auto()">Auto</button>
+  <br>
+  <br>
+  <button onclick="hoa()">Hand Off Auto</button>
+  <button onclick="ma()">Manual Auto</button>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+  <script src="js/d3-hand-off-auto-switch.js"></script>
+  <script>
+  let handOffAuto = new HandOffAuto($('.wrapper'), {});
+
+  $(".wrapper").resizable({
+    stop: function(event, ui) {
+      handOffAuto.redraw();
+    }
+  });
+
+  function hand() {
+    handOffAuto.setPosition('hand');
+  }
+
+  function off() {
+    handOffAuto.setPosition('off');
+  }
+
+  function auto() {
+    handOffAuto.setPosition('auto');
+  }
+
+  function manual() {
+    handOffAuto.setPosition('manual');
+  }
+
+  function hoa() {
+    $('.hoa').removeClass('hidden');
+    $('.ma').addClass('hidden');
+
+    handOffAuto.switchType = 'handOffAuto';
+    handOffAuto.setPosition('auto');
+    handOffAuto.redraw();
+  }
+
+  function ma() {
+    $('.hoa').addClass('hidden');
+    $('.ma').removeClass('hidden');
+
+    handOffAuto.switchType = 'manualAuto';
+    handOffAuto.setPosition('manual');
+    handOffAuto.redraw();
+  }
+  </script>
+</body>
+
+</html>
